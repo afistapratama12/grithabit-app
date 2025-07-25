@@ -4,14 +4,10 @@
   "private": true,
   "packageManager": "bun@1.0.0",
   "scripts": {
-    "build": "bun run next build",
-    "dev": "bun run next dev",
-    "lint": "bun run next lint",
-    "start": "bun run next start",
-    "db:setup": "bun run supabase db reset",
-    "db:push": "bun run supabase db push",
-    "type-check": "bun run tsc --noEmit",
-    "test:auth": "bun run test-auth.ts"
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "@hookform/resolvers": "latest",
