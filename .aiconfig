@@ -1,0 +1,6 @@
+rules:
+  - Use bun instead of npm
+  - Keep code style consistent (tabs, semicolons, function style)
+  - Do not refactor unless instructed
+  - Prefer comments over silent logic changes
+  - Follow existing folder structure and imports

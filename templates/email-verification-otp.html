@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Verification Code - Grithabit</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .content {
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        .code-container {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 2px solid #cbd5e1;
+        }
+        .code-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .verification-code {
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 12px;
+            color: #1e293b;
+            font-family: 'Courier New', monospace;
+            margin: 8px 0;
+        }
+        .instructions {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        .instructions-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .instructions-text {
+            color: #1e40af;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 24px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer-text {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .expires-notice {
+            background-color: #fef3c7;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #92400e;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px 16px;
+            }
+            .header, .content, .footer {
+                padding: 24px 16px;
+            }
+            .verification-code {
+                font-size: 28px;
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Grithabit</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1 class="title">Email Verification Code</h1>
+            <p class="subtitle">
+                Please enter this 6-digit code in the Grithabit app to verify your email address and complete your registration.
+            </p>
+
+            <!-- Verification Code -->
+            <div class="code-container">
+                <div class="code-label">Your Verification Code</div>
+                <div class="verification-code">{{ .Token }}</div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <div class="instructions-title">📱 How to use this code:</div>
+                <div class="instructions-text">
+                    1. Return to the Grithabit app<br>
+                    2. Enter this 6-digit code in the verification field<br>
+                    3. Click "Verify Email" to complete registration
+                </div>
+            </div>
+
+            <!-- Expiry Notice -->
+            <div class="expires-notice">
+                ⏰ This code expires in <strong>24 hours</strong> for security reasons.
+            </div>
+
+            <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin-top: 24px;">
+                If you didn't sign up for Grithabit, please ignore this email. Your email will not be added to our system.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">
+                This is an automated message from Grithabit.<br>
+                © 2025 Grithabit. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
