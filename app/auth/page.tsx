@@ -39,7 +39,6 @@ export default function AuthPage() {
   const onLogin = async (data: LoginForm) => {
     setIsLoading(true)
     try {
-      console.log('Attempting login for:', data.email)
       const { data: authData, error } = await signIn(data.email, data.password)
 
       if (error) {
@@ -63,7 +62,6 @@ export default function AuthPage() {
 
       // Check if email is confirmed
       if (!authData.user.email_confirmed_at) {
-        console.log('Email not confirmed, showing verification')
         setUserEmail(data.email)
         setShowVerification(true)
         toast({
@@ -84,9 +82,6 @@ export default function AuthPage() {
         })
         return
       }
-
-      console.log('Login successful! User:', authData.user.email)
-      console.log('Session established:', !!session)
 
       toast({
         title: "Welcome back!",
@@ -185,7 +180,6 @@ export default function AuthPage() {
         description: "Welcome to Grithabit! Your account has been activated.",
       })
       
-      console.log('OTP verification successful, session data:', result.session)
       router.push("/dashboard")
     } catch (error) {
       toast({

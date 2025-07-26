@@ -1,6 +1,8 @@
 'use server'
 
 import { createClient } from "./supabase/server"
+import { sendOTPEmail, sendWelcomeEmail } from "./email"
+import { NODE_ENV } from "./constants"
 
 // Store OTP data temporarily in memory (replace with Redis in production)
 interface OTPData {
@@ -51,17 +53,30 @@ export async function sendRegistrationOTP(email: string, password: string, fullN
       userData: { email, password, fullName }
     })
     
-    // For development - just console.log the OTP
-    console.log(`🔐 OTP untuk ${email}: ${otp}`)
-    console.log(`📧 Email verifikasi akan dikirim ke: ${email}`)
-    console.log(`👤 Nama lengkap: ${fullName}`)
-    console.log(`⏰ OTP akan expired dalam 10 menit`)
-    
-    return { 
-      success: true, 
-      message: "OTP has been sent to your email",
-      // Remove this in production:
-      developmentOTP: otp 
+    // Send OTP email
+    try {
+      await sendOTPEmail({
+        email,
+        fullName,
+        otp
+      })
+      
+      console.log(`📧 OTP email sent successfully to: ${email}`)
+      
+      return { 
+        success: true, 
+        message: "OTP has been sent to your email",
+        // Remove this in production:
+        developmentOTP: NODE_ENV === 'development' ? otp : undefined
+      }
+    } catch (emailError) {
+      console.error('Error sending OTP email:', emailError)
+      // Clean up if email fails
+      otpStorage.delete(email)
+      return { 
+        success: false, 
+        error: "Failed to send verification email. Please try again." 
+      }
     }
     
   } catch (error) {
@@ -158,6 +173,18 @@ export async function verifyOTPAndCreateUser(email: string, inputOTP: string) {
 
     console.log('User signed in successfully:', signInData.user?.email)
     
+    // Send welcome email
+    try {
+      await sendWelcomeEmail({
+        email: userEmail,
+        fullName
+      })
+      console.log(`🎉 Welcome email sent to: ${userEmail}`)
+    } catch (emailError) {
+      console.error('Error sending welcome email:', emailError)
+      // Don't fail the registration if welcome email fails
+    }
+    
     // Wait a bit longer for session to be properly established
     await new Promise(resolve => setTimeout(resolve, 500))
     
@@ -203,17 +230,28 @@ export async function resendRegistrationOTP(email: string) {
     stored.attempts = 0 // Reset attempts
     otpStorage.set(email, stored)
     
-    // For development - console.log the new OTP
-    console.log(`🔐 OTP baru untuk ${email}: ${newOTP}`)
-    console.log(`📧 Email verifikasi baru akan dikirim ke: ${email}`)
-    console.log(`👤 Nama lengkap: ${stored.userData.fullName}`)
-    console.log(`⏰ OTP akan expired dalam 10 menit`)
-    
-    return { 
-      success: true, 
-      message: "New OTP sent to your email",
-      // Remove this in production:
-      developmentOTP: newOTP 
+    // Send new OTP email
+    try {
+      await sendOTPEmail({
+        email,
+        fullName: stored.userData.fullName,
+        otp: newOTP
+      })
+      
+      console.log(`📧 New OTP email sent successfully to: ${email}`)
+      
+      return { 
+        success: true, 
+        message: "New OTP sent to your email",
+        // Remove this in production:
+        developmentOTP: NODE_ENV === 'development' ? newOTP : undefined
+      }
+    } catch (emailError) {
+      console.error('Error sending new OTP email:', emailError)
+      return { 
+        success: false, 
+        error: "Failed to send new verification email. Please try again." 
+      }
     }
     
   } catch (error) {

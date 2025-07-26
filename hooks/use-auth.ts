@@ -5,7 +5,6 @@ export function useCurrentUser() {
   return useQuery({
     queryKey: ['auth', 'currentUser'],
     queryFn: async () => {
-      console.log('useCurrentUser: Fetching user...')
       const { user, error } = await getCurrentUser()
       
       if (error) {
@@ -14,11 +13,8 @@ export function useCurrentUser() {
       }
       
       if (!user) {
-        console.log('useCurrentUser: No user found')
         throw new Error('No user found')
       }
-      
-      console.log('useCurrentUser: User found:', user.email)
       return user
     },
     retry: false,
@@ -32,7 +28,6 @@ export function useCurrentSession() {
   return useQuery({
     queryKey: ['auth', 'currentSession'],
     queryFn: async () => {
-      console.log('useCurrentSession: Fetching session...')
       const { session, error } = await getCurrentSession()
       
       if (error) {
@@ -41,11 +36,9 @@ export function useCurrentSession() {
       }
       
       if (!session) {
-        console.log('useCurrentSession: No session found')
         throw new Error('No session found')
       }
       
-      console.log('useCurrentSession: Session found for user:', session.user?.email)
       return session
     },
     retry: false,

@@ -60,12 +60,6 @@ export default function DashboardPage() {
     invalidateGoals,
   } = useInvalidateQueries();
 
-  console.log("userid", user?.id);
-  console.log("activities", activities);
-
-  console.log("loading:", loadingContribution, isContributionFetching)
-
-
   const handleTimeRangeChange = (range: "weekly" | "monthly") => {
     setTimeRange(range);
     // React Query will automatically refetch contribution data when timeRange changes
